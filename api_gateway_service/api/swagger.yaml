@@ -1,0 +1,162 @@
+openapi: 3.0.3
+components:
+  schemas:
+    dto.CreateProductResponseDto:
+      properties:
+        productId:
+          type: string
+      required:
+        - productId
+      type: object
+    dto.ProductResponse:
+      properties:
+        createdAt:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        productId:
+          type: string
+        updatedAt:
+          type: string
+      type: object
+    dto.ProductsListResponse:
+      properties:
+        hasMore:
+          type: boolean
+        page:
+          type: integer
+        products:
+          items:
+            $ref: '#/components/schemas/dto.ProductResponse'
+          type: array
+        size:
+          type: integer
+        totalCount:
+          type: integer
+        totalPages:
+          type: integer
+      type: object
+    dto.UpdateProductDto:
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        productId:
+          type: string
+      required:
+        - description
+        - name
+        - price
+        - productId
+      type: object
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /products:
+    post:
+      description: Create new product item
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dto.CreateProductResponseDto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/dto.CreateProductResponseDto'
+      summary: Create product
+      tags:
+        - Products
+  /products/{id}:
+    delete:
+      description: Delete existing product
+      parameters:
+        - description: Product ID
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: ""
+      summary: Delete product
+      tags:
+        - Products
+    get:
+      description: Get product by id
+      parameters:
+        - description: Product ID
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dto.ProductResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/dto.ProductResponse'
+      summary: Get product
+      tags:
+        - Products
+    put:
+      description: Update existing product
+      parameters:
+        - description: Product ID
+          in: path
+          name: id
+          required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dto.UpdateProductDto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/dto.UpdateProductDto'
+      summary: Update product
+      tags:
+        - Products
+  /products/search:
+    get:
+      description: Get product by name with pagination
+      parameters:
+        - description: search text
+          in: query
+          name: search
+        - description: page number
+          in: query
+          name: page
+        - description: number of elements
+          in: query
+          name: size
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dto.ProductsListResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/dto.ProductsListResponsew'
+      summary: Search product
+      tags:
+        - Products
+  
