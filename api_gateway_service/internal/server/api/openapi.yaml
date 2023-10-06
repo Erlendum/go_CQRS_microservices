@@ -1,0 +1,233 @@
+openapi: 3.0.3
+info:
+  description: Title
+  title: Title
+  version: 1.0.0
+servers:
+- url: https
+paths:
+  /products:
+    post:
+      description: Create new product item
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dto.CreateProductResponseDto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/dto.CreateProductResponseDto'
+          description: Created
+      summary: Create product
+      tags:
+      - Products
+  /products/{id}:
+    delete:
+      description: Delete existing product
+      parameters:
+      - description: Product ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Successful operation
+      summary: Delete product
+      tags:
+      - Products
+    get:
+      description: Get product by id
+      parameters:
+      - description: Product ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dto.ProductResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/dto.ProductResponse'
+          description: OK
+      summary: Get product
+      tags:
+      - Products
+    put:
+      description: Update existing product
+      parameters:
+      - description: Product ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dto.UpdateProductDto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/dto.UpdateProductDto'
+          description: OK
+      summary: Update product
+      tags:
+      - Products
+  /products/search:
+    get:
+      description: Get product by name with pagination
+      parameters:
+      - description: search text
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: page number
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: number of elements
+        explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dto.ProductsListResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/dto.ProductsListResponse'
+          description: OK
+      summary: Search product
+      tags:
+      - Products
+components:
+  schemas:
+    dto.CreateProductResponseDto:
+      example:
+        productId: productId
+      properties:
+        productId:
+          type: string
+      required:
+      - productId
+      type: object
+    dto.ProductResponse:
+      example:
+        createdAt: createdAt
+        productId: productId
+        price: 0.8008281904610115
+        name: name
+        description: description
+        updatedAt: updatedAt
+      properties:
+        createdAt:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        productId:
+          type: string
+        updatedAt:
+          type: string
+      type: object
+    dto.ProductsListResponse:
+      example:
+        size: 6
+        hasMore: true
+        totalPages: 5
+        page: 0
+        totalCount: 1
+        products:
+        - createdAt: createdAt
+          productId: productId
+          price: 0.8008281904610115
+          name: name
+          description: description
+          updatedAt: updatedAt
+        - createdAt: createdAt
+          productId: productId
+          price: 0.8008281904610115
+          name: name
+          description: description
+          updatedAt: updatedAt
+      properties:
+        hasMore:
+          type: boolean
+        page:
+          type: integer
+        products:
+          items:
+            $ref: '#/components/schemas/dto.ProductResponse'
+          type: array
+        size:
+          type: integer
+        totalCount:
+          type: integer
+        totalPages:
+          type: integer
+      type: object
+    dto.UpdateProductDto:
+      example:
+        productId: productId
+        price: 0.8008281904610115
+        name: name
+        description: description
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        productId:
+          type: string
+      required:
+      - description
+      - name
+      - price
+      - productId
+      type: object
+    ErrorResponse:
+      properties:
+        message:
+          example: Cannot login.
+          type: string
+        systemMessage:
+          type: string
+      required:
+      - message
+      - systemMessage
+      title: ErrorResponse
+      type: object

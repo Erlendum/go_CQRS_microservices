@@ -56,6 +56,19 @@ components:
         - price
         - productId
       type: object
+    ErrorResponse:
+      type: object
+      title: ErrorResponse
+      required:
+        - message
+        - systemMessage
+      properties:
+        message:
+          type: string
+          example: "Cannot login."
+        systemMessage:
+          type: string
+
 info:
   title: Title
   description: Title
@@ -87,9 +100,12 @@ paths:
           in: path
           name: id
           required: true
+          schema:
+            type: string
+
       responses:
         "200":
-          description: ""
+          description: "Successful operation"
       summary: Delete product
       tags:
         - Products
@@ -100,6 +116,8 @@ paths:
           in: path
           name: id
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -120,6 +138,8 @@ paths:
           in: path
           name: id
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -140,12 +160,18 @@ paths:
         - description: search text
           in: query
           name: search
+          schema:
+            type: string
         - description: page number
           in: query
           name: page
+          schema:
+            type: integer
         - description: number of elements
           in: query
           name: size
+          schema:
+            type: integer
       responses:
         "200":
           description: OK
@@ -155,7 +181,7 @@ paths:
                 $ref: '#/components/schemas/dto.ProductsListResponse'
             application/xml:
               schema:
-                $ref: '#/components/schemas/dto.ProductsListResponsew'
+                $ref: '#/components/schemas/dto.ProductsListResponse'
       summary: Search product
       tags:
         - Products
