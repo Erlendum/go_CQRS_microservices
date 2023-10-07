@@ -23,6 +23,11 @@ run_api_gateway:
 	go run api_gateway_service/cmd/main.go -config=./api_gateway_service/config/config.yaml
 
 
+proto_kafka:
+	@echo Generating kafka proto
+	cd proto/kafka && protoc --go_out=. --go-grpc_opt=require_unimplemented_servers=false --go-grpc_out=. kafka.proto
+
+
 proto_reader:
 	@echo Generating product reader microservice proto
 	cd reader_service/proto/product_reader && protoc --go_out=. --go-grpc_opt=require_unimplemented_servers=false --go-grpc_out=. product_reader.proto
