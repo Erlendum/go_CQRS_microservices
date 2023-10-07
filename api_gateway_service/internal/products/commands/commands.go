@@ -7,13 +7,13 @@ import (
 
 type ProductCommands struct {
 	CreateProduct CreateProductCmdHandler
-	//UpdateProduct UpdateProductCmdHandler
-	//DeleteProduct DeleteProductCmdHandler
+	UpdateProduct UpdateProductCmdHandler
+	DeleteProduct DeleteProductCmdHandler
 }
 
-//func NewProductCommands(createProduct CreateProductCmdHandler, updateProduct UpdateProductCmdHandler, deleteProduct DeleteProductCmdHandler) *ProductCommands {
-//	return &ProductCommands{CreateProduct: createProduct, UpdateProduct: updateProduct, DeleteProduct: deleteProduct}
-//}
+func NewProductCommands(createProduct CreateProductCmdHandler, updateProduct UpdateProductCmdHandler, deleteProduct DeleteProductCmdHandler) *ProductCommands {
+	return &ProductCommands{CreateProduct: createProduct, UpdateProduct: updateProduct, DeleteProduct: deleteProduct}
+}
 
 type CreateProductCommand struct {
 	CreateDto *dto.CreateProductDto
